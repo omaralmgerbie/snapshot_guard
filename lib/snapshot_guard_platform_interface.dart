@@ -25,6 +25,8 @@ abstract class SnapshotGuardPlatform extends PlatformInterface {
 
   Stream<bool> get guardStatusStream;
 
+  bool get isGuardEnabled;
+
   Future<bool?> toggleGuard() {
     throw UnimplementedError('toggleGuard() has not been implemented.');
   }

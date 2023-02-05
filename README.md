@@ -25,7 +25,7 @@ import 'package:snapshot_guard/snapshot_guard.dart';
 
 
 ## Usage
-To use the plugin, simply import the package in your Flutter project and use the provided `SnapshotGuard.toggleGuard()` method. This method should be called before building your Flutter app's user interface.
+To use the plugin, simply import the package in your Flutter project and use the provided `SnapshotGuard.toggleGuard()` method. This method can be called anywhere on the app and will toggle the guard ON/OFF.
 
 Example:
 
@@ -39,7 +39,7 @@ void main() async {
   runApp(MyApp());
 }
 ```
-to listen to Guard status changes use `SnapshotGuard.onGuardStatusChanged` 
+to listen to Guard status changes use `SnapshotGuard.onGuardStatusChanged` or directly get the value via `SnapshotGuard.isGuardEnabled`.
 
 ## Platform Support
 SnapshotGuard currently supports iOS and Android.
