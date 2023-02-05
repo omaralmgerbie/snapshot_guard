@@ -7,15 +7,19 @@ class SnapshotGuard {
   factory SnapshotGuard() => _instance;
   SnapshotGuard._internal();
 
-  Future<bool?> toggleGuard() {
+  static Future<bool?> toggleGuard() {
     return SnapshotGuardPlatform.instance.toggleGuard();
   }
 
-  Future<bool?> switchGuardStatus(bool status) {
+  static Future<bool?> switchGuardStatus(bool status) {
     return SnapshotGuardPlatform.instance.switchGuardStatus(status);
   }
 
-  Stream<bool> get onGuardStatusChanged {
+  static Stream<bool> get onGuardStatusChanged {
     return SnapshotGuardPlatform.instance.guardStatusStream;
+  }
+
+  static bool get isGuardEnabled {
+    return SnapshotGuardPlatform.instance.isGuardEnabled;
   }
 }

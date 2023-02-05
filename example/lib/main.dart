@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
     // We also handle the message potentially returning null.
     try {
       hide =
-          await SnapshotGuard().toggleGuard() ??false;
+          await SnapshotGuard.toggleGuard() ??false;
     } on PlatformException {
       hide = false;
     }
@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
               Text('ui is "${_hide ? 'hidden' : 'visible'}"'),
               ElevatedButton(
                 onPressed: () async {
-                  final result = await SnapshotGuard().toggleGuard();
+                  final result = await SnapshotGuard.toggleGuard();
                   if(result!= null) {
                     setState(() {
                     _isSnapshotHidden = result ;

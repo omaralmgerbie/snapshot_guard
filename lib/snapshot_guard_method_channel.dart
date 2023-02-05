@@ -32,4 +32,7 @@ class MethodChannelSnapshotGuard extends SnapshotGuardPlatform {
 
   @override
   Stream<bool> get guardStatusStream => _guardStatusSubject.stream;
+  
+  @override
+  bool get isGuardEnabled => _guardStatusSubject.value;
 }

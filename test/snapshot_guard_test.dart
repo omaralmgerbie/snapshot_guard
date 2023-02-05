@@ -23,6 +23,9 @@ class MockSnapshotGuardPlatform
     _guardStatusSubject.add(status);
     return Future.value(status);
   }
+  
+  @override
+  bool get isGuardEnabled => _guardStatusSubject.value;
 }
 
 void main() {
@@ -33,19 +36,17 @@ void main() {
   });
 
   test('toggleGuard', () async {
-    SnapshotGuard snapshotGuardPlugin = SnapshotGuard();
     MockSnapshotGuardPlatform fakePlatform = MockSnapshotGuardPlatform();
     SnapshotGuardPlatform.instance = fakePlatform;
 
-    expect(await snapshotGuardPlugin.toggleGuard(), true);
+    expect(await SnapshotGuard.toggleGuard(), true);
   });
 
   test('switchGuardStatus', () async {
-    SnapshotGuard snapshotGuardPlugin = SnapshotGuard();
     MockSnapshotGuardPlatform fakePlatform = MockSnapshotGuardPlatform();
     SnapshotGuardPlatform.instance = fakePlatform;
 
-    expect(await snapshotGuardPlugin.switchGuardStatus(true), true);
-    expect(await snapshotGuardPlugin.switchGuardStatus(false), false);
+    expect(await SnapshotGuard.switchGuardStatus(true), true);
+    expect(await SnapshotGuard.switchGuardStatus(false), false);
   });
 }
