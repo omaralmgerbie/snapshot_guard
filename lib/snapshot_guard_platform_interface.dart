@@ -23,11 +23,12 @@ abstract class SnapshotGuardPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
-  }
+  Stream<bool> get guardStatusStream;
 
-  Future<bool?> hideSnapshot() {
-    throw UnimplementedError('hideSnapshot() has not been implemented.');
+  Future<bool?> toggleGuard() {
+    throw UnimplementedError('toggleGuard() has not been implemented.');
+  }
+  Future<bool?> switchGuardStatus(bool status) {
+    throw UnimplementedError('switchGuardStatus() has not been implemented.');
   }
 }

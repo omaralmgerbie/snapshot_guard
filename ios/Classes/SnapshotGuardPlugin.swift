@@ -14,17 +14,27 @@ public class SnapshotGuardPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-
-      if(call.method == "hideSnapshot" ){
-          hide.toggle()
-          field.isSecureTextEntry = hide
-          result(hide)
-          return
+      switch( call.method ){
+      case "toggleGuard" : toggleGuard(result: result)
+      case "switchGuardStatus" :
+          let status = call.arguments! as? Bool ?? false
+          switchGuardStatus(status: status, result:result)
+      default : result( FlutterError(code:"INVALID_METHOD", message: "The method called is invalid", details: nil))
       }
-    result("iOS " + UIDevice.current.systemVersion)
   }
-
     
+    private func switchGuardStatus(status: Bool, result: FlutterResult) {
+            hide = status
+        field.isSecureTextEntry = hide
+        result(hide)
+    }
+    
+    private func toggleGuard(result: FlutterResult) {
+        hide.toggle()
+        field.isSecureTextEntry = hide
+        result(hide)
+    }
+//    this shows the app when
     public func applicationWillResignActive(_ application: UIApplication) {
         if(hide){
             field.isSecureTextEntry = false

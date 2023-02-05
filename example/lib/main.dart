@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -16,7 +18,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  bool _hide =false;
 
   @override
   void initState() {
@@ -26,14 +28,14 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String platformVersion;
+    late bool hide;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion =
-          await SnapshotGuard().getPlatformVersion() ?? 'Unknown platform version';
+      hide =
+          await SnapshotGuard().toggleGuard() ??false;
     } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+      hide = false;
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -42,7 +44,7 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _platformVersion = platformVersion;
+      _hide = hide;
     });
   }
 
@@ -57,17 +59,18 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text('Running on: $_platformVersion\n'),
+              Text('ui is "${_hide ? 'hidden' : 'visible'}"'),
               ElevatedButton(
                 onPressed: () async {
-                  final result = await SnapshotGuard().hideSnapshot();
+                  final result = await SnapshotGuard().toggleGuard();
                   if(result!= null) {
                     setState(() {
                     _isSnapshotHidden = result ;
                   });
                   }
-                  print('hideSnapshot: $result');
+                  log('hideSnapshot: $result');
                 },
                 child:  Text('Hide snapshot $_isSnapshotHidden'),
               ),

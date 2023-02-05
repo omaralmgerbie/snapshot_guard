@@ -10,7 +10,14 @@ void main() {
 
   setUp(() {
     channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return '42';
+      switch (methodCall.method) {
+        case 'toggleGuard':
+          return true;
+        case 'switchGuardStatus':
+          return methodCall.arguments;
+        default:
+          return false;
+      }
     });
   });
 
@@ -18,7 +25,12 @@ void main() {
     channel.setMockMethodCallHandler(null);
   });
 
-  test('getPlatformVersion', () async {
-    expect(await platform.getPlatformVersion(), '42');
+  test('toggleGuard', () async {
+    expect(await platform.toggleGuard(), true);
+  });
+
+  test('switchGuardStatus', () async {
+    expect(await platform.switchGuardStatus(true), true);
+    expect(await platform.switchGuardStatus(false), false);
   });
 }
