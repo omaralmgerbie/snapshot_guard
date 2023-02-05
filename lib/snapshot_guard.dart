@@ -6,11 +6,16 @@ class SnapshotGuard {
   static final SnapshotGuard _instance = SnapshotGuard._internal();
   factory SnapshotGuard() => _instance;
   SnapshotGuard._internal();
-  Future<String?> getPlatformVersion() {
-    return SnapshotGuardPlatform.instance.getPlatformVersion();
+
+  Future<bool?> toggleGuard() {
+    return SnapshotGuardPlatform.instance.toggleGuard();
   }
 
-  Future<bool?> hideSnapshot() {
-    return SnapshotGuardPlatform.instance.hideSnapshot();
+  Future<bool?> switchGuardStatus(bool status) {
+    return SnapshotGuardPlatform.instance.switchGuardStatus(status);
+  }
+
+  Stream<bool> get onGuardStatusChanged {
+    return SnapshotGuardPlatform.instance.guardStatusStream;
   }
 }

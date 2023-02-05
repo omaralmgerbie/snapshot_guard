@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:rxdart/rxdart.dart';
 
 import 'snapshot_guard_platform_interface.dart';
 
@@ -9,15 +10,26 @@ class MethodChannelSnapshotGuard extends SnapshotGuardPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('snapshot_guard');
 
+  final BehaviorSubject<bool> _guardStatusSubject =
+      BehaviorSubject.seeded(false);
+
   @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
+  Future<bool?> toggleGuard() async {
+    final result = await methodChannel.invokeMethod<bool>('toggleGuard');
+    return result;
   }
 
   @override
-  Future<bool?> hideSnapshot() async {
-    final result = await methodChannel.invokeMethod<bool>('hideSnapshot');
+  Future<bool?> switchGuardStatus(bool status) async {
+    final result = await methodChannel.invokeMethod<bool>('switchGuardStatus', status);
+    if (result != null) {
+      _guardStatusSubject.add(result);
+    }
     return result;
   }
+
+
+
+  @override
+  Stream<bool> get guardStatusStream => _guardStatusSubject.stream;
 }

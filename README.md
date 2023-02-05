@@ -1,15 +1,51 @@
+
+
 # snapshot_guard
+snapshot_guard is a Flutter plugin that implements a feature to prevent users from taking screenshots or screen recordings of the user interface.
 
-A new Flutter plugin project.
 
-## Getting Started
+|             | Android | iOS    |
+|-------------|---------|--------|
+| **Support** | SDK 17+ | iOS 12+ |
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+## Install
 
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+In the `pubspec.yaml` of your flutter project, add the following dependency:
+
+```yaml
+dependencies:
+  snapshot_guard: <latest_version>
+```
+
+In your library add the following import:
+
+```dart
+import 'package:snapshot_guard/snapshot_guard.dart';
+```
+
+
+## Usage
+To use the plugin, simply import the package in your Flutter project and use the provided `SnapshotGuard.toggleGuard()` method. This method should be called before building your Flutter app's user interface.
+
+Example:
+
+```dart
+import 'package:snapshot_guard/snapshot_guard.dart';
+
+void main() async {
+  await SnapshotGuard.toggleGuard();
+  // or 
+  await SnapshotGuard.switchGuardStatus(true);
+  runApp(MyApp());
+}
+```
+to listen to Guard status changes use `SnapshotGuard.onGuardStatusChanged` 
+
+## Platform Support
+SnapshotGuard currently supports iOS and Android.
+
+## Limitations
+Please note that SnapshotGuard does not guarantee 100% protection against screenshots or screen recordings. It is possible for determined users to bypass the screenshot prevention measures. This plugin is meant to provide a basic level of protection against casual screenshots or screen recordings.
+
+
 

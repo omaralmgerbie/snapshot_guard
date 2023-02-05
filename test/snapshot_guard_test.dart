@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rxdart/src/subjects/behavior_subject.dart';
 import 'package:snapshot_guard/snapshot_guard.dart';
 import 'package:snapshot_guard/snapshot_guard_platform_interface.dart';
 import 'package:snapshot_guard/snapshot_guard_method_channel.dart';
@@ -8,11 +9,20 @@ class MockSnapshotGuardPlatform
     with MockPlatformInterfaceMixin
     implements SnapshotGuardPlatform {
 
-  @override
-  Future<String?> getPlatformVersion() => Future.value('42');
+  final BehaviorSubject<bool> _guardStatusSubject = BehaviorSubject.seeded(false);
 
   @override
-  Future<bool?> hideSnapshot() => Future.value(true);
+  Future<bool?> toggleGuard() => Future.value(true);
+
+  @override
+  Stream<bool> get guardStatusStream => _guardStatusSubject.stream;
+
+  
+  @override
+  Future<bool?> switchGuardStatus(bool status) {
+    _guardStatusSubject.add(status);
+    return Future.value(status);
+  }
 }
 
 void main() {
@@ -22,11 +32,20 @@ void main() {
     expect(initialPlatform, isInstanceOf<MethodChannelSnapshotGuard>());
   });
 
-  test('getPlatformVersion', () async {
+  test('toggleGuard', () async {
     SnapshotGuard snapshotGuardPlugin = SnapshotGuard();
     MockSnapshotGuardPlatform fakePlatform = MockSnapshotGuardPlatform();
     SnapshotGuardPlatform.instance = fakePlatform;
 
-    expect(await snapshotGuardPlugin.getPlatformVersion(), '42');
+    expect(await snapshotGuardPlugin.toggleGuard(), true);
+  });
+
+  test('switchGuardStatus', () async {
+    SnapshotGuard snapshotGuardPlugin = SnapshotGuard();
+    MockSnapshotGuardPlatform fakePlatform = MockSnapshotGuardPlatform();
+    SnapshotGuardPlatform.instance = fakePlatform;
+
+    expect(await snapshotGuardPlugin.switchGuardStatus(true), true);
+    expect(await snapshotGuardPlugin.switchGuardStatus(false), false);
   });
 }
