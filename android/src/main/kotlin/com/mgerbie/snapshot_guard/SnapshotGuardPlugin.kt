@@ -1,4 +1,4 @@
-package com.example.snapshot_guard
+package com.mgerbie.snapshot_guard
 
 import android.app.Activity
 import android.view.Display
@@ -25,19 +25,20 @@ class SnapshotGuardPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private var flag = WindowManager.LayoutParams.FLAG_SECURE
     private var hide = false
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "snapshot_guard")
         channel.setMethodCallHandler(this)
     }
 
-    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+    override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
-            "getPlatformVersion" -> {
-                result.success("Android ${android.os.Build.VERSION.RELEASE}")
+            "toggleGuard" -> {
+                this.toggleGuard(result)
                 return
             }
-            "hideSnapshot" -> {
-                this.hideSnapshot(result)
+            "switchGuardStatus" -> {
+               val arg :Boolean = call.arguments<Boolean>() == true
+                switchGuardStatus(arg,result)
                 return
             }
             else -> {
@@ -47,23 +48,38 @@ class SnapshotGuardPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
 
-    fun hideSnapshot(result: Result) {
+    private fun switchGuardStatus(status: Boolean, result: Result) {
+        if (status) {
+            activity?.window?.addFlags(flag)
+        } else {
+            activity?.window?.clearFlags(flag)
+        }
+        if (activity != null) {
+            hide = status
+            result.success(hide)
+
+        } else {
+            result.success(!status)
+        }
+    }
+
+    private fun toggleGuard(result: Result) {
         hide = !hide
         if (hide) {
             activity?.window?.addFlags(flag)
         } else {
             activity?.window?.clearFlags(flag)
         }
-        if(activity !=null){
+        if (activity != null) {
             result.success(hide)
 
-        }else {
+        } else {
             result.success(false)
         }
     }
 
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onDetachedFromEngine( binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
     }
 

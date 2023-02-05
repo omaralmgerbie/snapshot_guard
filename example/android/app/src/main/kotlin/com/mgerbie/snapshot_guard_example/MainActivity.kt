@@ -1,4 +1,4 @@
-package com.example.snapshot_guard_example
+package com.mgerbie.snapshot_guard_example
 
 import io.flutter.embedding.android.FlutterActivity
 

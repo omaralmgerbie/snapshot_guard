@@ -1,4 +1,4 @@
-group 'com.example.snapshot_guard'
+group 'com.mgerbie.snapshot_guard'
 version '1.0-SNAPSHOT'
 
 buildscript {
