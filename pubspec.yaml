@@ -1,7 +1,9 @@
 name: snapshot_guard
 description: A new Flutter plugin project.
+repository: https://github.com/omaralmgerbie/snapshot_guard
+issue_tracker: https://github.com/omaralmgerbie/snapshot_guard/issues
 version: 0.0.1
-homepage: google.com
+homepage: https://github.com/omaralmgerbie/snapshot_guard
 
 environment:
   sdk: '>=2.19.0 <3.0.0'
@@ -11,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
+  rxdart: ">=0.27.7 <1.0.0"
 
 dev_dependencies:
   flutter_test:
@@ -35,7 +38,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.example.snapshot_guard
+        package: com.mgerbie.snapshot_guard
         pluginClass: SnapshotGuardPlugin
       ios:
         pluginClass: SnapshotGuardPlugin

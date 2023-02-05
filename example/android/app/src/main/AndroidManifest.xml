@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.snapshot_guard_example">
+    package="com.mgerbie.snapshot_guard_example">
    <application
         android:label="snapshot_guard_example"
         android:name="${applicationName}"
