@@ -34,20 +34,20 @@ public class SnapshotGuardPlugin: NSObject, FlutterPlugin {
         field.isSecureTextEntry = hide
         result(hide)
     }
-//    this shows the app when
-    public func applicationWillResignActive(_ application: UIApplication) {
-        if(hide){
-            field.isSecureTextEntry = false
-        }
+    
+//    public func applicationWillResignActive(_ application: UIApplication) {
+//        if(hide){
+//            field.isSecureTextEntry = false
+//        }
+//
+//    }
 
-    }
-
-    public func applicationDidBecomeActive(_ application: UIApplication) {
-        if(hide){
-            field.isSecureTextEntry = true
-        }
-
-    }
+//    public func applicationDidBecomeActive(_ application: UIApplication) {
+//        if(hide){
+//            field.isSecureTextEntry = true
+//        }
+//
+//    }
     private func addSecuredView() {
         if let window = UIApplication.shared.delegate?.window as? UIWindow {
             if (!window.subviews.contains(field)) {
