@@ -1,3 +1,5 @@
+## 0.0.3
+* ios 17 issue fixed.
 ## 0.0.2
 
 * changes in the documentation

@@ -34,7 +34,7 @@ public class SnapshotGuardPlugin: NSObject, FlutterPlugin {
         field.isSecureTextEntry = hide
         result(hide)
     }
-//    this shows the app when
+
     public func applicationWillResignActive(_ application: UIApplication) {
         if(hide){
             field.isSecureTextEntry = false
@@ -52,11 +52,12 @@ public class SnapshotGuardPlugin: NSObject, FlutterPlugin {
         if let window = UIApplication.shared.delegate?.window as? UIWindow {
             if (!window.subviews.contains(field)) {
                 window.addSubview(field)
-                field.centerYAnchor.constraint(equalTo: window.centerYAnchor).isActive = true
-                field.centerXAnchor.constraint(equalTo: window.centerXAnchor).isActive = true
+                let view = UIView(frame: CGRect(x: 0, y: 0, width: field.frame.self.width, height: field.frame.self.height))
+                window.addSubview(field)
                 window.layer.superlayer?.addSublayer(field.layer)
-                field.layer.sublayers?.first?.addSublayer(window.layer)
-                debugPrint("something")
+                field.layer.sublayers?.last!.addSublayer(window.layer)
+                field.leftView = view
+                field.leftViewMode = .always
             }
         }
   

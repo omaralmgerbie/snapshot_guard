@@ -2,7 +2,7 @@ name: snapshot_guard
 description: a Flutter plugin that implements a feature to prevent users from taking screenshots or screen recordings of the user interface.
 repository: https://github.com/omaralmgerbie/snapshot_guard
 issue_tracker: https://github.com/omaralmgerbie/snapshot_guard/issues
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/omaralmgerbie/snapshot_guard
 
 environment:
