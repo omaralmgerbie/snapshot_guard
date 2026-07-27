@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('ui is "${_hide ? 'hidden' : 'visible'}"'),
               ElevatedButton(
