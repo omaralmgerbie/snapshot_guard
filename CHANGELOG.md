@@ -1,3 +1,6 @@
+## 0.0.4
+* ios: add Swift Package Manager support (CocoaPods still works).
+* android: add namespace to build.gradle for AGP 8 compatibility.
 ## 0.0.3
 * ios 17 issue fixed.
 ## 0.0.2
